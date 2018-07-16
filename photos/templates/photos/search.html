@@ -1,0 +1,40 @@
+{% extends "photos/base.html" %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <h3>Searched Text = {{ text }}</h3>
+    <div class="row">
+        {% for photo in photos %}
+          <div class="col-lg-3">
+            <div class="card" style="margin-top:15px; background-color:black;">
+              <h6 class="card-text"><a href="{% url 'photos:profile' photo.id %}" style="color:white;">{{ photo.author }}</a></h6>
+              <a href="{% url 'photos:detail' photo.id %}"><img src="{{ photo.image.url }}" class="card-img" height="300px"></a>
+              <a href="{% url 'photos:detail' photo.id %}" class="text-light"><h5 class="card-title">{{ photo.title }}</h5></a>
+                <small style="color:white;">Uploaded On = {{ photo.date_time }}</small>
+
+                <form action="{% url 'photos:like' photo.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning btn-sm" style="padding-left:15px; padding-right:15px; margin-left:15px;">Like</button>
+                    <span class="text-light" style="margin-left:90px;">{{ photo.num_like }} Likes</span>
+                </form>
+                <form action="{% url 'photos:comment' photo.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        {% for f in form %}
+                            {{ f }}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-success btn-sm">Comment</button>
+                    </div>
+                </form>
+
+                  <a href="{% url 'photos:view-comments' photo.id %}" class="text-light">View All Comments</a>
+
+
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

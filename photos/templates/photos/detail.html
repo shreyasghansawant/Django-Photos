@@ -1,0 +1,39 @@
+{% extends "photos/base.html" %}
+
+{% block body %}
+
+<div class="container-fluid" style="margin-top:15px;">
+  <div class="row">
+    <div class="col-lg-9">
+      <img src="{{ photo.image.url }}" class="img-fluid">
+    </div>
+    <div class="col-lg-3">
+      <h3 style="word-wrap:break-word;">{{ photo.title }}</h3>
+      <p style="word-wrap:break-word;">{{ photo.description }}</p>
+      <hr>
+      <strong><a href="{% url 'photos:profile' photo.id %}">{{ photo.author }}</a></strong><br>
+      Uploaded On = {{ photo.date_time }}
+      <hr>
+
+      <form action="{% url 'photos:like' photo.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-warning">Like</button>
+          <span class="text-light text-dark" style="margin-left:100px;">{{ photo.num_like }} Likes</span>
+      </form>
+        <br>
+      <form action="{% url 'photos:comment' photo.id %}" method="post">
+          {% csrf_token %}
+          <div class="input-group">
+              {% for f in form %}
+                {{ f }}
+              {% endfor %}
+              <button type="submit" class="btn btn-success">Comment</button>
+          </div>
+      </form>
+
+      <a href="{% url 'photos:view-comments' photo.id %}" class="text-dark">View All Comments</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

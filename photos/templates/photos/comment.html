@@ -1,0 +1,41 @@
+{% extends "photos/base.html" %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-5">
+            <h1 style="word-wrap:break-word;">{{ photo.title }}</h1>
+            Uploaded On = {{ photo.date_time }}
+            <img src="{{ photo.image.url }}" class="img-fluid">
+            <p style="word-wrap:break-word;">{{ photo.description }}</p>
+        </div>
+        <div class="col-lg-7">
+            <h4>{{ num_c }} comments</h4><br>
+
+            <form action="{% url 'photos:comment' photo.id %}" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    {% for f in form %}
+                        {{ f }}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Comment</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <ul>
+                {% for c in comments %}
+                    <li class="card" style="margin-bottom:15px;">
+                        <h6><a href="{% url 'photos:profile' c.image.id %}" class="card-title">{{ c.user }}</a></h6>
+                        <hr style="margin:0px; padding:0px;">
+                        <div class="card-text">{{ c.comment }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

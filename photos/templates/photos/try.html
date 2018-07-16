@@ -1,0 +1,24 @@
+{% extends "photos/base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <h1>{{ me }}</h1>
+    <div class="row">
+        <div class="col-lg-4">
+            <h1>{{ photo.title }}</h1><br>
+            <img src="{{ photo.image.url }}" height="400px" width="400px">
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-7">
+            <h1>You have Liked this Image</h1><br>
+            <h3>
+                Sorry, This Function is Under Developement,<br>
+                So you are notified on this page that you have liked this image
+            </h3><br>
+            <h6>Once again sorry for this function and I will try to develope this as fast as I can</h6>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

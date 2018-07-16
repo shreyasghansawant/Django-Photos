@@ -1,0 +1,25 @@
+{% extends "photos/base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <h1>SignUp Form</h1>
+    <form action="{% url 'photos:signup' %}" method="post">
+        {% csrf_token %}
+        {% for f in form %}
+        <br><label>{{ f.label_tag }}</label>
+        <div class="">{{ f }}</div>
+        {% if f.help_text %}
+        <small>{{ f.help_text }}</small>
+        <br>
+        {% endif %}
+        {% for error in f.errors %}
+        <small class="text-danger">{{ error }}</small>
+        {% endfor %}
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-success">SignUp</button>
+    </form>
+</div>
+
+{% endblock %}
